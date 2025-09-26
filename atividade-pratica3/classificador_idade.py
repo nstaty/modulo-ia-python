@@ -14,3 +14,4 @@ else:
     categoria = "Idade inválida"
 
 print(f"Você é classificado como: {categoria}")
+
