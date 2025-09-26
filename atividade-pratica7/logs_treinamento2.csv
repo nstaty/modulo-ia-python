@@ -1,0 +1,41 @@
+# Análise de Logs CSV com Pandas
+
+import pandas as pd
+import os
+
+# Nome do arquivo de logs (Certifique-se de que ele exista!)
+nome_arquivo = 'logs_treinamento.csv'
+
+# Criando um arquivo fictício para teste (apenas para garantir que o código rode)
+if not os.path.exists(nome_arquivo):
+    dados = {'tempo_execucao': [10.5, 12.0, 9.8, 15.2], 
+             'modelo': ['A', 'B', 'A', 'C']}
+    df_temp = pd.DataFrame(dados)
+    df_temp.to_csv(nome_arquivo, index=False)
+    print(f"Arquivo '{nome_arquivo}' criado para teste.")
+
+
+try:
+    # 1. Lê o arquivo CSV
+    df = pd.read_csv(nome_arquivo)
+
+    # 2. Verifica se a coluna 'tempo_execucao' existe
+    if 'tempo_execucao' in df.columns:
+        
+        # 3. Calcula a média e o desvio padrão
+        media = df['tempo_execucao'].mean()
+        desvio_padrao = df['tempo_execucao'].std()
+
+        # 4. Exibe os resultados
+        print(f"\n--- Análise do Arquivo {nome_arquivo} ---")
+        print(f"Média do tempo de execução: {media:.2f} segundos")
+        print(f"Desvio Padrão: {desvio_padrao:.2f}")
+    else:
+        print(f"Erro: O arquivo '{nome_arquivo}' não contém a coluna 'tempo_execucao'.")
+
+except FileNotFoundError:
+    print(f"Erro: O arquivo '{nome_arquivo}' não foi encontrado.")
+except pd.errors.EmptyDataError:
+    print(f"Erro: O arquivo '{nome_arquivo}' está vazio.")
+except Exception as e:
+    print(f"Erro na leitura ou cálculo: {e}")
